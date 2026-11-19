@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>แดชบอร์ดบัญชียา – 3 แบบให้เลือก</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--cd:#fff;--tx:#121212;--mu:#666;--bd:#ccc;--a:#121212;--control:#f3f3f3;--orange:#ff5500;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#121212;--cd:#1f1f1f;--tx:#fff;--mu:#aaa;--bd:#303030;--a:#e5e5e5;--control:#303030}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 'Noto Sans Thai',system-ui,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.hero{background:#121212;color:#fff}
+.hero-inner{max-width:1100px;margin:0 auto;padding:26px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+h1{font-size:28px;line-height:1.25;margin:0 0 4px;font-weight:700}p.s{margin:0;color:#ccc}
+.theme-toggle{font:inherit;color:#fff;background:transparent;border:1px solid #666;border-radius:4px;padding:8px 12px;white-space:nowrap;cursor:pointer}
+.theme-toggle:hover{border-color:var(--orange);color:var(--orange)}
+.theme-toggle:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{font:inherit;border:1px solid var(--bd);background:var(--control);color:var(--tx);padding:8px 14px;border-radius:4px;cursor:pointer}
+.tabs button.on{border-color:var(--orange);color:var(--orange);box-shadow:inset 0 -2px var(--orange)}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:14px}
+.kp{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:6px;padding:14px;min-width:0}
+.card h3{margin:0 0 10px;font-size:14px;color:var(--mu);font-weight:600}
+.k b{display:block;font-size:28px;line-height:1.2;color:var(--a)}.k small{color:var(--mu)}
+#app[data-v="2"] .card{border-radius:4px;border-left:4px solid var(--orange)}
+#app[data-v="3"] .card{border-radius:6px;border-top:4px solid var(--orange)}
+@media(min-width:900px){.w2{grid-column:span 2}}
+.hb .r{display:grid;grid-template-columns:150px 1fr 34px;gap:8px;align-items:center;margin:5px 0;font-size:13px}
+.hb .l{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hb .t{height:12px;background:var(--bd);border-radius:6px;overflow:hidden}
+.hb i{display:block;height:100%;border-radius:6px}.hb b{text-align:right}
+.dn{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.dn svg{width:150px;flex:none}
+.lg div{display:flex;gap:6px;align-items:center;font-size:13px}.lg i{width:10px;height:10px;border-radius:2px}
+.tm{display:flex;flex-wrap:wrap;gap:4px}.tm div{min-height:74px;padding:8px;color:#fff;border-radius:4px;display:flex;flex-direction:column;justify-content:space-between;font-size:12px}
+.tm span{font-size:20px;font-weight:700}
+.sc{overflow-x:auto}.cl{display:flex;gap:8px;align-items:flex-end;height:190px;min-width:560px}
+.cl div{flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%;font-size:11px;color:var(--mu)}
+.cl i{display:block;background:var(--a);border-radius:4px 4px 0 0;margin-top:3px}.cl b{color:var(--tx);font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;border-bottom:1px solid var(--bd);text-align:left}
+th{color:var(--mu);font-weight:600}.hm td{text-align:center}.hm td:first-child{text-align:left;white-space:nowrap}
+select{font:inherit;padding:6px 10px;border-radius:4px;border:1px solid var(--bd);background:var(--control);color:var(--tx);margin-bottom:8px;max-width:100%}
+.bar{display:inline-block;height:8px;background:var(--a);border-radius:4px;vertical-align:middle;margin-right:6px}
+svg text{fill:var(--mu);font-family:inherit}
+</style></head><body>
+<header class="hero"><div class="hero-inner"><div>
+<h1>💊 แดชบอร์ดบัญชียา · ร้านยาจำลอง</h1>
+<p class="s">ข้อมูลจริงจากไฟล์ drugs.json (100 รายการ)</p>
+</div><button class="theme-toggle" id="theme-toggle" type="button" aria-label="สลับเป็นโหมดมืด" aria-pressed="false">☾ โหมดมืด</button></div></header>
+<main><div class="tabs" id="tabs" style="display:none"></div><div id="app"></div></main>
+<script>
+const D={"cats":["แก้ปวดและต้านการอักเสบ","ยาปฏิชีวนะ","ต้านเชื้อรา ไวรัส และพยาธิ","หัวใจและความดันโลหิต","เบาหวาน","ไขมันในเลือด","ทางเดินอาหาร","แก้แพ้","ทางเดินหายใจ","ผิวหนัง","ตาและหู","วิตามินและเกลือแร่","ระบบประสาท","ข้อและกล้ามเนื้อ"],"it":[["PARA500","Paracetamol","500 mg","tablet",0,"N02BE01",500,"tablet"],["PARA120S","Paracetamol","120 mg/5 mL, 60 mL","syrup",0,"N02BE01",20,"bottle"],["IBU400","Ibuprofen","400 mg","tablet",0,"M01AE01",300,"tablet"],["IBU100S","Ibuprofen","100 mg/5 mL, 60 mL","suspension",0,"M01AE01",10,"bottle"],["NAPRO250","Naproxen","250 mg","tablet",0,"M01AE02",100,"tablet"],["DICLO25","Diclofenac sodium","25 mg","tablet",0,"M01AB05",200,"tablet"],["DICLOGEL","Diclofenac diethylamine","1%, 30 g","gel",0,"M02AA15",10,"tube"],["MEFE250","Mefenamic acid","250 mg","capsule",0,"M01AG01",200,"capsule"],["CELE200","Celecoxib","200 mg","capsule",0,"M01AH01",60,"capsule"],["AMOX500","Amoxicillin","500 mg","capsule",1,"J01CA04",300,"capsule"],["AMOX125S","Amoxicillin","125 mg/5 mL, 60 mL","dry syrup",1,"J01CA04",10,"bottle"],["AMCLAV875","Amoxicillin/Clavulanic acid","875/125 mg","tablet",1,"J01CR02",60,"tablet"],["DICLOX250","Dicloxacillin","250 mg","capsule",1,"J01CF01",200,"capsule"],["CEPH500","Cephalexin","500 mg","capsule",1,"J01DB01",200,"capsule"],["AZI250","Azithromycin","250 mg","tablet",1,"J01FA10",60,"tablet"],["DOXY100","Doxycycline","100 mg","capsule",1,"J01AA02",100,"capsule"],["NORF400","Norfloxacin","400 mg","tablet",1,"J01MA06",100,"tablet"],["CIPRO500","Ciprofloxacin","500 mg","tablet",1,"J01MA02",100,"tablet"],["COTRI480","Sulfamethoxazole/Trimethoprim","400/80 mg","tablet",1,"J01EE01",100,"tablet"],["NITRO100","Nitrofurantoin","100 mg","capsule",1,"J01XE01",60,"capsule"],["METRO400","Metronidazole","400 mg","tablet",2,"P01AB01",100,"tablet"],["FLUCO150","Fluconazole","150 mg","capsule",2,"J02AC01",30,"capsule"],["CLOTRI-C","Clotrimazole","1%, 15 g","cream",2,"D01AC01",20,"tube"],["KETO-C","Ketoconazole","2%, 15 g","cream",2,"D01AC08",10,"tube"],["ACYC400","Acyclovir","400 mg","tablet",2,"J05AB01",100,"tablet"],["ACYC-C","Acyclovir","5%, 5 g","cream",2,"D06BB03",10,"tube"],["ALBEN200","Albendazole","200 mg","tablet",2,"P02CA03",50,"tablet"],["MEBEN100","Mebendazole","100 mg","tablet",2,"P02CA01",50,"tablet"],["NYST-S","Nystatin","100,000 U/mL, 12 mL","oral suspension",2,"A07AA02",5,"bottle"],["AMLO5","Amlodipine","5 mg","tablet",3,"C08CA01",300,"tablet"],["AMLO10","Amlodipine","10 mg","tablet",3,"C08CA01",200,"tablet"],["ENAL5","Enalapril","5 mg","tablet",3,"C09AA02",200,"tablet"],["LOSAR50","Losartan","50 mg","tablet",3,"C09CA01",300,"tablet"],["HCTZ25","Hydrochlorothiazide","25 mg","tablet",3,"C03AA03",200,"tablet"],["ATEN50","Atenolol","50 mg","tablet",3,"C07AB03",200,"tablet"],["PROP10","Propranolol","10 mg","tablet",3,"C07AA05",200,"tablet"],["FURO40","Furosemide","40 mg","tablet",3,"C03CA01",100,"tablet"],["SPIRO25","Spironolactone","25 mg","tablet",3,"C03DA01",100,"tablet"],["ISDN5","Isosorbide dinitrate","5 mg","sublingual tablet",3,"C01DA08",100,"tablet"],["ASA81","Aspirin","81 mg","tablet",3,"B01AC06",300,"tablet"],["CLOP75","Clopidogrel","75 mg","tablet",3,"B01AC04",100,"tablet"],["WARF3","Warfarin","3 mg","tablet",3,"B01AA03",60,"tablet"],["METF500","Metformin","500 mg","tablet",4,"A10BA02",500,"tablet"],["METF850","Metformin","850 mg","tablet",4,"A10BA02",300,"tablet"],["GLIP5","Glipizide","5 mg","tablet",4,"A10BB07",200,"tablet"],["GLIC80","Gliclazide","80 mg","tablet",4,"A10BB09",200,"tablet"],["GLIB5","Glibenclamide","5 mg","tablet",4,"A10BB01",200,"tablet"],["SIMVA20","Simvastatin","20 mg","tablet",5,"C10AA01",300,"tablet"],["ATOR20","Atorvastatin","20 mg","tablet",5,"C10AA05",200,"tablet"],["ROSU10","Rosuvastatin","10 mg","tablet",5,"C10AA07",100,"tablet"],["GEMF600","Gemfibrozil","600 mg","tablet",5,"C10AB04",100,"tablet"],["OMEP20","Omeprazole","20 mg","capsule",6,"A02BC01",300,"capsule"],["PANTO40","Pantoprazole","40 mg","tablet",6,"A02BC02",100,"tablet"],["FAMO20","Famotidine","20 mg","tablet",6,"A02BA03",100,"tablet"],["SIMET80","Simethicone","80 mg","chewable tablet",6,"A03AX13",100,"tablet"],["DOMP10","Domperidone","10 mg","tablet",6,"A03FA03",200,"tablet"],["METOC10","Metoclopramide","10 mg","tablet",6,"A03FA01",100,"tablet"],["HYOS10","Hyoscine butylbromide","10 mg","tablet",6,"A03BB01",100,"tablet"],["LOPE2","Loperamide","2 mg","capsule",6,"A07DA03",100,"capsule"],["CHAR250","Activated charcoal","250 mg","capsule",6,"A07BA01",100,"capsule"],["BISA5","Bisacodyl","5 mg","tablet",6,"A06AB02",100,"tablet"],["SENNA75","Sennosides","7.5 mg","tablet",6,"A06AB06",100,"tablet"],["LACTU-S","Lactulose","10 g/15 mL, 60 mL","oral solution",6,"A06AD11",10,"bottle"],["CETI10","Cetirizine","10 mg","tablet",7,"R06AE07",300,"tablet"],["LORA10","Loratadine","10 mg","tablet",7,"R06AX13",300,"tablet"],["CPM4","Chlorpheniramine","4 mg","tablet",7,"R06AB04",500,"tablet"],["FEXO180","Fexofenadine","180 mg","tablet",7,"R06AX26",100,"tablet"],["HYDROX10","Hydroxyzine","10 mg","tablet",7,"N05BB01",100,"tablet"],["SALB-INH","Salbutamol","100 mcg/dose, 200 doses","inhaler",8,"R03AC02",10,"inhaler"],["BUDE-INH","Budesonide","200 mcg/dose, 200 doses","inhaler",8,"R03BA02",5,"inhaler"],["MONT10","Montelukast","10 mg","tablet",8,"R03DC03",60,"tablet"],["DEXTRO-S","Dextromethorphan","15 mg/5 mL, 60 mL","syrup",8,"R05DA09",20,"bottle"],["BROM8","Bromhexine","8 mg","tablet",8,"R05CB02",200,"tablet"],["AMBRO30","Ambroxol","30 mg","tablet",8,"R05CB06",200,"tablet"],["GUAI-S","Guaifenesin","100 mg/5 mL, 60 mL","syrup",8,"R05CA03",10,"bottle"],["NAC200","Acetylcysteine","200 mg","powder for oral solution",8,"R05CB01",100,"sachet"],["FLUTI-NS","Fluticasone propionate","50 mcg/spray, 120 sprays","nasal spray",8,"R01AD08",5,"bottle"],["HC1-C","Hydrocortisone","1%, 15 g","cream",9,"D07AA02",10,"tube"],["BETA-C","Betamethasone valerate","0.1%, 15 g","cream",9,"D07AC01",10,"tube"],["TA-C","Triamcinolone acetonide","0.1%, 15 g","cream",9,"D07AB09",10,"tube"],["MUPI-O","Mupirocin","2%, 15 g","ointment",9,"D06AX09",10,"tube"],["PVP-I","Povidone-iodine","10%, 30 mL","solution",9,"D08AG02",20,"bottle"],["CAP-ED","Chloramphenicol","0.5%, 10 mL","eye drops",10,"S01AA01",10,"bottle"],["TOBRA-ED","Tobramycin","0.3%, 5 mL","eye drops",10,"S01AA12",5,"bottle"],["OFLO-EAR","Ofloxacin","0.3%, 5 mL","ear drops",10,"S02AA16",5,"bottle"],["VITC500","Ascorbic acid","500 mg","tablet",11,"A11GA01",300,"tablet"],["FOLIC5","Folic acid","5 mg","tablet",11,"B03BB01",200,"tablet"],["FESO4","Ferrous sulfate","200 mg","tablet",11,"B03AA07",300,"tablet"],["CACO3","Calcium carbonate","1,250 mg","tablet",11,"A12AA04",200,"tablet"],["VITB1","Thiamine","100 mg","tablet",11,"A11DA01",200,"tablet"],["AMIT10","Amitriptyline","10 mg","tablet",12,"N06AA09",100,"tablet"],["FLUN5","Flunarizine","5 mg","capsule",12,"N07CA03",100,"capsule"],["BETAH6","Betahistine","6 mg","tablet",12,"N07CA01",100,"tablet"],["GABA300","Gabapentin","300 mg","capsule",12,"N02BF01",100,"capsule"],["FLUOX20","Fluoxetine","20 mg","capsule",12,"N06AB03",60,"capsule"],["SERT50","Sertraline","50 mg","tablet",12,"N06AB06",60,"tablet"],["METHO500","Methocarbamol","500 mg","tablet",13,"M03BA03",100,"tablet"],["ORPH-P","Orphenadrine/Paracetamol","35/450 mg","tablet",13,"M03BC51",100,"tablet"],["COLCH06","Colchicine","0.6 mg","tablet",13,"M04AC01",60,"tablet"],["ALLO100","Allopurinol","100 mg","tablet",13,"M04AA01",200,"tablet"]]};
+const cats=D.cats,pal=['#0f766e','#2563eb','#d97706','#7c3aed','#db2777','#059669','#ea580c','#0891b2','#65a30d','#9333ea','#dc2626','#4f46e5','#ca8a04','#475569'];
+const it=D.it.map(r=>({sku:r[0],n:r[1],s:r[2],f:r[3],c:r[4],atc:r[5],ro:r[6]}));
+const fg=f=>/cream|gel|ointment|^solution$/.test(f)?'ใช้ภายนอก':/tablet/.test(f)?'เม็ด':f=='capsule'?'แคปซูล':/syrup|suspension|oral solution|powder/.test(f)?'ของเหลว/ผง':/inhaler|spray/.test(f)?'พ่น/สูด':'หยอดตา/หู';
+const FG=['เม็ด','แคปซูล','ใช้ภายนอก','ของเหลว/ผง','พ่น/สูด','หยอดตา/หู'];
+const AN={A:'ทางเดินอาหาร/เมตาบอลิซึม',B:'เลือด',C:'หัวใจ',D:'ผิวหนัง',J:'ต้านเชื้อ',M:'กล้ามเนื้อ/ข้อ',N:'ประสาท',P:'พยาธิ',R:'หายใจ',S:'ตา/หู'};
+const cnt=(k)=>{const m={};it.forEach(x=>{const v=k(x);m[v]=(m[v]||0)+1});return Object.entries(m).sort((a,b)=>b[1]-a[1])};
+const card=(t,b,x='')=>`<section class="card ${x}"><h3>${t}</h3>${b}</section>`;
+const hbar=(e,mx)=>`<div class="hb">${e.map(([l,v,c])=>`<div class="r"><span class="l" title="${l}">${l}</span><span class="t"><i style="width:${v/mx*100}%;background:${c}"></i></span><b>${v}</b></div>`).join('')}</div>`;
+function kp(){
+ const oral=it.filter(x=>['เม็ด','แคปซูล'].includes(fg(x.f))).length;
+ const K=[['รายการยาทั้งหมด',it.length,'SKU'],['หมวดยา',cats.length,'หมวด'],['ชื่อสามัญไม่ซ้ำ',new Set(it.map(x=>x.n)).size,'ตัวยา'],['กลุ่ม ATC หลัก',new Set(it.map(x=>x.atc[0])).size,'กลุ่ม (ตัวอักษรแรก)'],['ยาเม็ด/แคปซูล',Math.round(oral/it.length*100)+'%',oral+' จาก '+it.length+' รายการ']];
+ return `<div class="kp">${K.map(k=>card(k[0],`<b>${k[1]}</b><small>${k[2]}</small>`,'k')).join('')}</div>`}
+function donut(e){const t=it.length,C=2*Math.PI*36;let o=0;
+ const s=e.map(([l,v],i)=>{const L=v/t*C,r=`<circle cx="50" cy="50" r="36" fill="none" stroke="${pal[i]}" stroke-width="16" stroke-dasharray="${L} ${C-L}" stroke-dashoffset="${-o}" transform="rotate(-90 50 50)"/>`;o+=L;return r}).join('');
+ return `<div class="dn"><svg viewBox="0 0 100 100">${s}<text x="50" y="54" text-anchor="middle" font-size="14" font-weight="700" style="fill:var(--tx)">${t}</text></svg><div class="lg">${e.map(([l,v],i)=>`<div><i style="background:${pal[i]}"></i>${l} <b>${v}</b></div>`).join('')}</div></div>`}
+const byCat=cnt(x=>x.c).map(([c,v])=>[cats[c],v,+c]);
+function v1(){
+ const top=[...it].sort((a,b)=>b.ro-a.ro).slice(0,10).map(x=>[x.n+' '+x.s.split(',')[0],x.ro,'var(--a)']);
+ return kp()+`<div class="g">`+card('จำนวนรายการยาตามหมวด',hbar(byCat.map(([l,v,i])=>[l,v,pal[i]]),13),'w2')+card('รูปแบบยา',donut(cnt(x=>fg(x.f))))+card('10 อันดับจุดสั่งซื้อซ้ำสูงสุด (หน่วยตามรายการ)',hbar(top,500),'w2')+`</div>`}
+function v2(){
+ const A=cnt(x=>x.atc[0]),mx=A[0][1];
+ const tm=`<div class="tm">${byCat.map(([l,v,i])=>`<div style="flex:${v} 1 ${v*20}px;background:${pal[i]}"><b>${l}</b><span>${v}</span></div>`).join('')}</div>`;
+ const col=`<div class="sc"><div class="cl">${A.map(([a,v])=>`<div><b>${v}</b><i style="height:${v/mx*140}px"></i><span style="font-size:15px;color:var(--tx);font-weight:700">${a}</span>${AN[a]||''}</div>`).join('')}</div></div>`;
+ const hm=`<div class="sc"><table class="hm"><tr><th>หมวด</th>${FG.map(f=>`<th>${f}</th>`).join('')}</tr>${cats.map((c,i)=>`<tr><td>${c}</td>${FG.map(f=>{const n=it.filter(x=>x.c==i&&fg(x.f)==f).length;return `<td style="background:color-mix(in srgb,var(--a) ${Math.min(n*11,90)}%,transparent)">${n||'·'}</td>`}).join('')}</tr>`).join('')}</table></div>`;
+ return kp()+`<div class="g">`+card('สัดส่วนหมวดยา (ขนาดกล่อง = จำนวนรายการ)',tm,'w2')+card('กลุ่ม ATC ระดับ 1',col)+card('หมวด × รูปแบบยา (จำนวนรายการ)',hm,'w2')+`</div>`}
+function dots(){const W=640,L=190,x=v=>L+(Math.log10(v)-Math.log10(4))/(Math.log10(600)-Math.log10(4))*430;
+ let s=[5,10,50,100,500].map(t=>`<line x1="${x(t)}" x2="${x(t)}" y1="0" y2="${cats.length*24}" stroke="var(--bd)"/><text x="${x(t)}" y="${cats.length*24+14}" font-size="10" text-anchor="middle">${t}</text>`).join('');
+ cats.forEach((c,i)=>{s+=`<text x="${L-8}" y="${i*24+16}" font-size="11" text-anchor="end">${c}</text>`;it.filter(z=>z.c==i).forEach(z=>{s+=`<circle cx="${x(z.ro)}" cy="${i*24+12}" r="5" fill="${pal[i]}" fill-opacity=".75"><title>${z.n} ${z.s} · ${z.ro}</title></circle>`})});
+ return `<div class="sc"><svg viewBox="0 0 ${W} ${cats.length*24+22}" style="min-width:560px;width:100%">${s}</svg></div>`}
+function tbl(c){const r=it.filter(x=>c==='all'||x.c==c).sort((a,b)=>b.ro-a.ro).slice(0,c==='all'?12:99);
+ return `<table><tr><th>SKU</th><th>ยา</th><th>รูปแบบ</th><th>จุดสั่งซื้อซ้ำ</th></tr>${r.map(x=>`<tr><td>${x.sku}</td><td>${x.n} ${x.s}</td><td>${x.f}</td><td><span class="bar" style="width:${x.ro/500*70}px"></span>${x.ro}</td></tr>`).join('')}</table>`}
+function v3(){return kp()+`<div class="g">`+card('จำนวนรายการยาตามหมวด',hbar(byCat.map(([l,v,i])=>[l,v,pal[i]]),13),'w2')+card('รายการเรียงตามจุดสั่งซื้อซ้ำ',`<select id="sel"><option value="all">ทุกหมวด (Top 12)</option>${cats.map((c,i)=>`<option value="${i}">${c}</option>`).join('')}</select><div id="tb">${tbl('all')}</div>`,'w2')+`</div>`}
+const V=[['แบบ 1 · ภาพรวมสะอาด',v1],['แบบ 2 · หมวดและ ATC',v2],['แบบ 3 · มุมสต็อก',v3]];
+function show(i){const a=document.getElementById('app');a.dataset.v=i+1;a.innerHTML=V[i][1]();
+ [...document.querySelectorAll('#tabs button')].forEach((b,j)=>b.classList.toggle('on',i==j));
+ const s=document.getElementById('sel');if(s)s.onchange=()=>{document.getElementById('tb').innerHTML=tbl(s.value)}}
+document.getElementById('tabs').innerHTML=V.map((v,i)=>`<button>${v[0]}</button>`).join('');
+document.querySelectorAll('#tabs button').forEach((b,i)=>b.onclick=()=>show(i));show(2);
+const themeToggle=document.getElementById('theme-toggle');
+themeToggle.onclick=()=>{
+ const dark=document.documentElement.dataset.theme!=='dark';
+ document.documentElement.dataset.theme=dark?'dark':'light';
+ themeToggle.setAttribute('aria-pressed',String(dark));
+ themeToggle.setAttribute('aria-label',dark?'สลับเป็นโหมดสว่าง':'สลับเป็นโหมดมืด');
+ themeToggle.textContent=dark?'☀ โหมดสว่าง':'☾ โหมดมืด';
+};
+</script></body></html>
